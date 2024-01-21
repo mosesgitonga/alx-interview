@@ -4,15 +4,17 @@ minimum operations
 """
 
 
-def minOperations(n):
+def minOperations(n: int) -> int:
     """
     find minimum operations needed to result to n
     """
 
     mylist = []
-    while n != 1:
-        for i in range(2, 9):
-            if n % i == 0:
-                n = n / i
-                mylist.append(i)
+    i = 2
+    while n > 1:
+        if n % i == 0:
+            n = n // i
+            mylist.append(i)
+        else:
+            i += 1
     return sum(mylist)
