@@ -4,79 +4,29 @@ log parsing
 """
 import sys
 
- 
-def count_status_type(func):
-    """
-    counts the number of status
-        eg: if status 401 appears 3 times in 
-            the live streamed data the count becomes 3
-    """
-    count_401, count_400, count_404, count_200, count_301 =  0, 0, 0, 0, 0
-    count_403, count_500 = 0, 0
-    
 
-    def wrapper(*args, **kwargs):
-        nonlocal count_200, count_301, count_401, count_400, count_404
-        nonlocal count_403, count_500
-
-        res = func(*args, **kwargs)
-
-        if res == '200':
-            count_200 += 1
-        elif res == '301':
-            count_301 += 1
-        elif res == '401':
-            count_401 += 1
-        elif res == '400':
-            count_400 += 1
-        elif res == '404':
-            count_404 += 1
-        elif res == '403':
-            count_403 += 1
-        elif res == '500':
-            count_500 += 1
+try:
+    mydict = {}
+    size = 0
+    for i, ln in enumerate(sys.stdin, start=0):
+        line = ln.strip()
+        sections = line.split(" ")
+        size += int(sections[-1]) 
+        if sections[-2] in mydict:
+           mydict[sections[-2]] += 1
+        else:
+            mydict[sections[-2]] = 1
         
-        return res, count_401, count_400, count_404, count_200, count_301, count_403, count_500
+        mydict = dict(sorted(mydict.items()))
+        
+        if i % 10 == 0:
+            print(f'File size: {size}')
+            for key, value in mydict.items():
+                print(f'{key}: {value}')
 
-    return wrapper
-
-@count_status_type
-def status(status_code):
-    """
-    count number of times status is called
-    """
-    return status_code
- 
-def log_parse():
-    """
-    log parse data
-    """
-    try:     
-        for i, ln in enumerate(sys.stdin, start=0):
-            line = ln.strip()
-            sections = line.split()
-            status(sections[-2])
-            status_code, count_401, count_400, count_404, count_200, count_301, count_403, count_500 = status(sections[-2])
-
-            if status_code == '200':
-                print(f'{status_code}: {count_200}')
-            elif status_code == '301':
-                print(f'{status_code}: {count_301}')
-            elif status_code == '401':
-                print(f'{status_code}: {count_401}')
-            elif status_code == '400':
-                print(f'{status_code}: {count_400}')
-            elif status_code == '404':
-                print(f'{status_code}: {count_404}')
-            elif status_code == '403':
-                print(f'{status_code}: {count_403}')
-            elif status_code == '500':
-                print(f'{status_code}: {count_500}')
-
-
-    except KeyboardInterrupt:
-        pass
-
-
-if __name__ == "__main__":
-    log_parse()
+except KeyboardInterrupt:
+    pass
+finally:
+    print("File size: {}".format(total_size))
+    for key, val in my_dict.items():
+        print("{}: {}".format(key, val))
