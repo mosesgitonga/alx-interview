@@ -1,8 +1,10 @@
-#!/usr/bin/env python3.10
+#!/usr/bin/env python3
+"""
+log parsing
+"""
 import sys
 
-
-    
+ 
 def count_status_type(func):
     """
     counts the number of status
@@ -40,11 +42,15 @@ def count_status_type(func):
 
 @count_status_type
 def status(status_code):
+    """
+    count number of times status is called
+    """
     return status_code
-
-
-        
+ 
 def log_parse():
+    """
+    log parse data
+    """
     try:     
         for i, ln in enumerate(sys.stdin, start=0):
             line = ln.strip()
