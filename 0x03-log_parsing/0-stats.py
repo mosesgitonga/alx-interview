@@ -11,14 +11,13 @@ try:
     for i, ln in enumerate(sys.stdin, start=0):
         line = ln.strip()
         sections = line.split(" ")
-        size += int(sections[-1]) 
+        size += int(sections[-1])
         if sections[-2] in mydict:
-           mydict[sections[-2]] += 1
+            mydict[sections[-2]] += 1
         else:
             mydict[sections[-2]] = 1
-        
+
         mydict = dict(sorted(mydict.items()))
-        
         if i % 10 == 0:
             print(f'File size: {size}')
             for key, value in mydict.items():
