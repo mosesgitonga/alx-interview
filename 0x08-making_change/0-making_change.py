@@ -7,6 +7,8 @@ def makeChange(coins, total):
     """
     fewest number of coins to meet a given amount(total)
     """
+    if total <= 0:
+        return 0
     temp_total = total
     perfectCoins = []
     coins.sort(reverse=True)
