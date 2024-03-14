@@ -3,50 +3,42 @@
 find winner
 """
 
-def is_prime(num):
-    """"
-    check if num is prime
-    """
-    if num < 2:
-        return False
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % i == 0:
-            return False
-    return True
-
-def generate_primes_up_to_n(n):
-    """
-    generate primes 
-    """
-    primes = []
-    for i in range(2, n + 1):
-        if is_prime(i):
-            primes.append(i)
-    return primes
 
 def isWinner(x, nums):
+    """x - rounds
+    nums - numbers list
     """
-    finding winner
-    """
-    # Input validation
-    if not all(isinstance(n, int) and n >= 1 for n in nums):
-        raise ValueError("All elements of nums must be positive integers")
-    if not all(1 <= n <= 10000 for n in nums) or not (1 <= x <= 10000):
-        raise ValueError("x and each element of nums must be between 1 and 10000")
-
-    prime_numbers = generate_primes_up_to_n(max(nums))
-    maria_wins = 0
-    for n in nums:
-        maria_moves = sum(n % prime == 0 for prime in prime_numbers)
-        # If Maria has an even number of moves, she will lose
-        if maria_moves % 2 == 0:
-            continue
-        else:
-            maria_wins += 1
-
-    if maria_wins > x - maria_wins:
-        return "Maria"
-    elif maria_wins < x - maria_wins:
-        return "Ben"
-    else:
+    if x <= 0 or nums is None:
         return None
+    if x != len(nums):
+        return None
+
+    ben = 0
+    maria = 0
+
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
+    for i in range(2, len(a)):
+        rm_multiples(a, i)
+
+    for i in nums:
+        if sum(a[0:i + 1]) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+    if ben > maria:
+        return "Ben"
+    if maria > ben:
+        return "Maria"
+    return None
+
+
+def rm_multiples(ls, x):
+    """removes multiple
+    of primes
+    """
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
+            break
