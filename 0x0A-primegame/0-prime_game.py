@@ -1,5 +1,7 @@
 #!/usr.bin/python3
-
+"""
+find winner
+"""
 def is_prime(num):
     if num < 2:
         return False
