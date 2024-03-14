@@ -2,7 +2,11 @@
 """
 find winner
 """
+
 def is_prime(num):
+    """"
+    check if num is prime
+    """
     if num < 2:
         return False
     for i in range(2, int(num ** 0.5) + 1):
@@ -11,6 +15,9 @@ def is_prime(num):
     return True
 
 def generate_primes_up_to_n(n):
+    """
+    generate primes 
+    """
     primes = []
     for i in range(2, n + 1):
         if is_prime(i):
@@ -18,6 +25,9 @@ def generate_primes_up_to_n(n):
     return primes
 
 def isWinner(x, nums):
+    """
+    finding winner
+    """
     # Input validation
     if not all(isinstance(n, int) and n >= 1 for n in nums):
         raise ValueError("All elements of nums must be positive integers")
